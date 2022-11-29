@@ -112,7 +112,6 @@ class GameInstance(ttk.Frame):
         self.setWinnerColor(winner,event)
 
         if(self.is_ai_playing and winner == '/'):
-            print("AI plays")
             winner, x, y = self.tttgame.makeAIMove(x,y)
             self.markAIMove(event.widget.master.master,x,y)
 
@@ -134,8 +133,6 @@ class GameInstance(ttk.Frame):
 
     def markAIMove(self, master_event, x, y):
         label_to_change = None
-        print("X = ", x)
-        print("Y = ", y)
         for widget in master_event.children.values():
             if(widget.grid_info()["row"] - 1 == x and widget.grid_info()["column"] == y):
                 label_to_change = widget
@@ -147,7 +144,6 @@ class GameInstance(ttk.Frame):
     def setWinnerColor(self, winner, event):
         global parent_game_board
         master_widget = event.widget.master.master
-        print("TESTING OVERALL GRID DATA")
         x = master_widget.grid_info()["row"] - 1
         y = master_widget.grid_info()["column"]
         if(winner == 'X'):
@@ -156,7 +152,7 @@ class GameInstance(ttk.Frame):
         elif(winner == 'O'):
             winner = parent_game_board.makeMove(x, y, x_turn=False)
             event.widget.master.master.config(bg="red")
-        if(winner != '/' or winner != '_'):
+        if(winner != '/' and winner != '_'):
             self.setOverallWinner(winner)
     
     def setOverallWinner(self, winner):

@@ -10,7 +10,6 @@ class TicTacToeGame():
 
     def makeMove(self, x, y, x_turn):
         self.board[x][y] = 'X' if x_turn else 'O'
-        self.printBoard()
         return self.check_status()
 
 
@@ -18,39 +17,22 @@ class TicTacToeGame():
         x,y = self.letAIMove()
         while(self.board[x][y] == 'X' or self.board[x][y] == 'O' or (x == user_x and y == user_y)):
             x,y = self.letAIMove()
-        print("USER X = ", user_x)
-        print("USER Y = ", user_y)
-        print("ITEM IN POS = ", self.board[x][y])
         self.board[x][y] = 'O'
-        self.printBoard()
         return (self.check_status(),x,y)
 
     def letAIMove(self):
         return [random.randint(0,2), random.randint(0,2)] # X, Y
 
     def check_status(self):
-        print("checking")
         end, winner = self.check_lines()
-        print("WINNER")
-        print(winner)
         if(end):
-            print(winner)
             return winner
         end, winner = self.check_diags()
-        print(winner)
         if(end):
-            print(winner)
             return winner
         if(self.checkForTie()):
-            print('TIE')
             return '_'
         return '/'
-
-    def printBoard(self):
-        for x in self.board:
-            for y in x:
-                print(y, end=" ")
-            print("\n")
     
     def checkForTie(self):
         for x in self.board:
